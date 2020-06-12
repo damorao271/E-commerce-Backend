@@ -1,10 +1,10 @@
-const { TypeList, validate } = require("../models/typeListModel");
+const { Color, validate } = require("../models/colorModel");
 const express = require("express");
 const router = express.Router();
 
 router.get("/", async (req, res) => {
-  const list = await TypeList.find().sort("name");
-  res.send(list);
+  const users = await Color.find().sort("name");
+  res.send(users);
 });
 
 router.post("/", async (req, res) => {
@@ -14,14 +14,13 @@ router.post("/", async (req, res) => {
   // let verify = await User.findOne({ email: req.body.email });
   // if (verify) return res.status(400).send("User already registered");
 
-  let list = new TypeList({
-    type: req.body.type,
-    gender: req.body.gender,
+  let color = new Color({
+    name: req.body.name,
   });
 
-  list = await list.save();
+  color = await color.save();
 
-  res.send(list);
+  res.send(color);
 });
 
 module.exports = router;

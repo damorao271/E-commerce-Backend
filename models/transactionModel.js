@@ -3,8 +3,8 @@ const Joi = require("joi");
 
 const transactionSchema = mongoose.Schema(
   {
-    amount: { type: Number, required: true, min: 0 },
-    userId: { type: String, required: true },
+    amount: { type: Number, required: true, min: 0, trim: true },
+    userId: { type: String, required: true, trim: true },
   },
   {
     timestamps: true,

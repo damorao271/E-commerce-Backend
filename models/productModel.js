@@ -3,9 +3,9 @@ const Joi = require("joi");
 
 const productSchema = mongoose.Schema(
   {
-    name: { type: String, required: true },
-    type: { type: String, required: true },
-    gender: { type: String, required: true },
+    name: { type: String, required: true, trim: true },
+    type: { type: String, required: true, trim: true },
+    gender: { type: String, required: true, trim: true },
   },
   {
     timestamps: true,
