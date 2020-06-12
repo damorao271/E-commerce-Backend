@@ -18,6 +18,10 @@ router.post("/", async (req, res) => {
     name: req.body.name,
     type: req.body.type,
     gender: req.body.gender,
+    quantity: req.body.quantity,
+    color: req.body.color,
+    size: req.body.size,
+    price: req.body.price,
   });
 
   product = await product.save();

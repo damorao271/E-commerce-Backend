@@ -6,6 +6,10 @@ const productSchema = mongoose.Schema(
     name: { type: String, required: true, trim: true },
     type: { type: String, required: true, trim: true },
     gender: { type: String, required: true, trim: true },
+    quantity: { type: Number, required: true, trim: true },
+    color: { type: String, required: true, trim: true },
+    size: { type: String, required: true, trim: true },
+    price: { type: Number, required: true, trim: true },
   },
   {
     timestamps: true,
@@ -18,7 +22,11 @@ function validateProduct(product) {
   const schema = {
     name: Joi.string().required(),
     type: Joi.string().required(),
-    gender: Joi.string().required(),
+    gender: Joi.string().required().lowercase(),
+    quantity: Joi.number().required(),
+    color: Joi.string().required(),
+    size: Joi.string().required().lowercase(),
+    price: Joi.number().required(),
   };
   return Joi.validate(product, schema);
 }
