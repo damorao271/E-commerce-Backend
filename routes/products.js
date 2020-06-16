@@ -1,10 +1,20 @@
 const { Product, validate } = require("../models/productModel");
 const express = require("express");
+const validateObjectId = require("../middleware/validateObjectId");
 const router = express.Router();
 
 router.get("/", async (req, res) => {
-  const users = await Product.find().sort("name");
-  res.send(users);
+  const product = await Product.find().sort("name");
+  res.send(product);
+});
+
+router.get("/:id", validateObjectId, async (req, res) => {
+  const product = await Product.findById(req.params.id).select("-__v");
+
+  if (!product)
+    return res.status(404).send("The movie with the given ID was not found.");
+
+  res.send(product);
 });
 
 router.post("/", async (req, res) => {
