@@ -4,6 +4,7 @@ const users = require("../routes/users");
 const color = require("../routes/color");
 const products = require("../routes/products");
 const typeList = require("../routes/typeList");
+const auth = require("../routes/auth");
 const transaction = require("../routes/transaction");
 const error = require("../middleware/error");
 
@@ -15,5 +16,6 @@ module.exports = function (app) {
   app.use("/products", products);
   app.use("/typeList", typeList);
   app.use("/transaction", transaction);
+  app.use("/auth", auth);
   app.use(error);
 };
