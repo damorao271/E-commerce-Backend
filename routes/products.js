@@ -8,7 +8,54 @@ router.get("/", async (req, res) => {
   res.send(product);
 });
 
+// router.get("/:type", async (req, res) => {
+//   const product = await Product.find({ type: req.params.type }).sort({
+//     size: -1,
+//   });
+//   if (!product)
+//     return res.status(404).send("The product with the given ID was not found.");
+
+//   res.send(product);
+// });
+
+// router.get("/:type/:name", async (req, res) => {
+//   const product = await Product.find({
+//     name: req.params.name,
+//     type: req.params.type,
+//   }).sort({
+//     size: -1,
+//   });
+//   if (!product)
+//     return res.status(404).send("The product with the given ID was not found.");
+
+//   res.send(product);
+// });
+
+// router.get("/:type/:name/:size", async (req, res) => {
+//   const product = await Product.find({
+//     name: req.params.name,
+//     type: req.params.type,
+//     size: req.params.size,
+//   }).sort({
+//     size: -1,
+//   });
+//   if (!product)
+//     return res.status(404).send("The product with the given ID was not found.");
+
+//   res.send(product);
+// });
+
+// Encontrar por ID
+
 router.get("/:id", validateObjectId, async (req, res) => {
+  const product = await Product.findById(req.params.id).select("-__v");
+  if (!product)
+    return res.status(404).send("The movie with the given ID was not found.");
+
+  res.send(product);
+});
+
+router.get("/name/:id", validateObjectId, async (req, res) => {
   const product = await Product.findById(req.params.id).select("-__v");
 
   if (!product)
