@@ -2,6 +2,7 @@ const { Product, validate } = require("../models/productModel");
 const express = require("express");
 const validateObjectId = require("../middleware/validateObjectId");
 const router = express.Router();
+const { auth } = require("../middleware/authMiddleware");
 
 router.get("/", async (req, res) => {
   const product = await Product.find().sort("name");
@@ -64,7 +65,7 @@ router.get("/name/:id", validateObjectId, async (req, res) => {
   res.send(product);
 });
 
-router.post("/", async (req, res) => {
+router.post("/", auth, async (req, res) => {
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
