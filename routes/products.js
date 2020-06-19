@@ -3,6 +3,7 @@ const express = require("express");
 const validateObjectId = require("../middleware/validateObjectId");
 const router = express.Router();
 const { auth } = require("../middleware/authMiddleware");
+const { admin } = require("../middleware/admin");
 
 router.get("/", async (req, res) => {
   const product = await Product.find().sort("name");
@@ -52,6 +53,14 @@ router.get("/:id", validateObjectId, async (req, res) => {
   const product = await Product.findById(req.params.id).select("-__v");
   if (!product)
     return res.status(404).send("The movie with the given ID was not found.");
+
+  res.send(product);
+});
+
+router.delete("/:id", [auth, admin], async (req, res) => {
+  const product = await Product.findByIdAndRemove(req.params.id);
+  if (!product)
+    return res.status(404).send("The product with the given ID was not found.");
 
   res.send(product);
 });

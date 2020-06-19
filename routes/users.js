@@ -1,8 +1,14 @@
 const { User, validate } = require("../models/userModel");
+const { auth } = require("../middleware/authMiddleware");
 const express = require("express");
 const bcrypt = require("bcrypt");
 const router = express.Router();
 const _ = require("lodash");
+
+router.get("/me", auth, async (req, res) => {
+  const user = await User.findById(req.user._id);
+  res.send(user);
+});
 
 router.get("/", async (req, res) => {
   const users = await User.find().sort("name");
