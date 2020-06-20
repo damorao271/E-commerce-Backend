@@ -1,11 +1,18 @@
 require("dotenv").config();
+require("express-async-errors");
+const winston = require("winston");
+require("winston-mongodb");
+
 // const winston = require("winston");
 const mongoose = require("mongoose");
 const express = require("express");
 const app = express();
 
 require("./startup/routes")(app);
-
+// winston.add(winston.transports.File, { filename: "logfile.log" });
+// winston.add(winston.transports.MongoDB, {
+//   db: "mongodb://localhost/ecommerce",
+// });
 // Puertos y URL
 const uri = process.env.ATLAS_URI;
 const localhost = process.env.LOCAL_HOST;

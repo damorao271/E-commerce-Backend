@@ -6,7 +6,7 @@ const products = require("../routes/products");
 const typeList = require("../routes/typeList");
 const auth = require("../routes/auth");
 const transaction = require("../routes/transaction");
-const error = require("../middleware/error");
+const error = require("../middleware/errorMiddleware");
 
 module.exports = function (app) {
   app.use(cors());

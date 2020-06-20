@@ -3,7 +3,7 @@ const express = require("express");
 const validateObjectId = require("../middleware/validateObjectId");
 const router = express.Router();
 const { auth } = require("../middleware/authMiddleware");
-const { admin } = require("../middleware/admin");
+const { admin } = require("../middleware/adminMiddleware");
 
 router.get("/", async (req, res) => {
   const product = await Product.find().sort("name");
