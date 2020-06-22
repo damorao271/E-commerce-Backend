@@ -1,6 +1,5 @@
 const { Cart, validate } = require("../models/cartModel");
 const express = require("express");
-const validateObjectId = require("../middleware/validateObjectId");
 const router = express.Router();
 const { auth } = require("../middleware/authMiddleware");
 const { admin } = require("../middleware/adminMiddleware");
@@ -56,10 +55,38 @@ router.get("/:user", async (req, res) => {
   res.send(cart);
 });
 
-router.get("/:user/:id", async (req, res) => {
-  const cart = await Cart.find({ user: req.params.user, id: req.params.id });
+router.get("/:user/:productId", async (req, res) => {
+  const cart = await Cart.find({
+    user: req.params.user,
+    productId: req.params.productId,
+  });
   if (!cart)
     return res.status(404).send("The product with the given ID was not found.");
+
+  res.send(cart);
+});
+
+router.put("/:id", async (req, res) => {
+  const { error } = validate(req.body);
+  if (error) return res.status(400).send(error.details[0].message);
+
+  const cart = await Cart.findByIdAndUpdate(
+    req.params.id,
+    {
+      user: req.body.user,
+      productId: req.body.productId,
+      name: req.body.name,
+      type: req.body.type,
+      gender: req.body.gender,
+      quantity: req.body.quantity,
+      color: req.body.color,
+      size: req.body.size,
+      price: req.body.price,
+    },
+    { new: true }
+  );
+
+  if (!cart) return res.status(400).send("Invalid Product");
 
   res.send(cart);
 });
@@ -90,6 +117,7 @@ router.post("/", async (req, res) => {
 
   let cart = new Cart({
     user: req.body.user,
+    productId: req.body.productId,
     name: req.body.name,
     type: req.body.type,
     gender: req.body.gender,
